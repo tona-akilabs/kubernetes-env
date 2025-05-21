@@ -1,0 +1,37 @@
+# deploy_nginx.yaml
+- name: Deploy NGINX Pod to Kubernetes
+  hosts: localhost
+  tasks:
+    - name: Deploy NGINX Pod
+      community.kubernetes.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: nginx
+            namespace: default
+          spec:
+            containers:
+              - name: nginx
+                image: nginx:latest
+                ports:
+                  - containerPort: 80
+
+    - name: Expose NGINX Service
+      community.kubernetes.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: nginx-service
+            namespace: default
+          spec:
+            selector:
+              app: nginx
+            ports:
+              - protocol: TCP
+                port: 80
+                targetPort: 80
+            type: NodePort # NodePort | ClusterIP

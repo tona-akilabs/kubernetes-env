@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+  labels:
+    run: my-app
+spec:
+  selector:
+    matchLabels:
+      run: my-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        run: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: gcr.io/develop-459306/simple-node-amd64:blue
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+      imagePullSecrets:
+        - name: gcr-json-key
