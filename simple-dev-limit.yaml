@@ -12,15 +12,15 @@ metadata:
 spec:
   limits:
   - type: Container
-    default:
+    default: #default limits if not specified in container spec
       cpu: "1"
       memory: 512Mi
-    defaultRequest:
+    defaultRequest: #default resource requests
       cpu: "0.5"
       memory: 256Mi
-    min:
+    min: #minimum allowed for each container
       cpu: "0.1"
       memory: 128Mi
-    max:
+    max: #maximum allowed for each container
       cpu: "2"
       memory: 1Gi

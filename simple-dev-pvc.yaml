@@ -6,11 +6,11 @@ metadata:
 spec:
   limits:
   - type: PersistentVolumeClaim
-    min:
+    min: #minimum allowed for each container
       storage: 1Gi
-    max:
+    max: #maximum allowed for each container
       storage: 100Gi
-    default:
+    default: #default limits if not specified in container spec
       storage: 10Gi
-    defaultRequest:
+    defaultRequest: #default resource requests
       storage: 5Gi
