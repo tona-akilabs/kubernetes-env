@@ -6,7 +6,7 @@ metadata:
 spec:
   hard:
     # These look a little odd because they're not nested but they refer to the requests and limit fields in a Pod
-    requests.cpu: "1"
-    requests.memory: 100Gi
-    limits.cpu: "1"
-    limits.memory: 100Gi
+    requests.cpu: "16"        # Total CPU requested across all pods <= 16 cores
+    requests.memory: 100Gi    # Total memory requested across all pods <= 100Gi
+    limits.cpu: "16"          # Total CPU limits across all pods <= 16 cores
+    limits.memory: 100Gi      # Total memory limits across all pods <= 100Gi

@@ -1,0 +1,26 @@
+#1). If a container has no requests/limits
+  #1.1). Sets the request to 0.5 CPU / 256Mi
+  #1.2). Sets the limit to 1 CPU / 512Mi
+#2). Enforces that all containers:
+  #2.1). Must request at least 0.1 CPU and 128Mi
+  #2.2). Can’t request more than 2 CPU or 1Gi
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: container-limits
+  namespace: dev-team
+spec:
+  limits:
+  - type: Container
+    default:
+      cpu: "1"
+      memory: 512Mi
+    defaultRequest:
+      cpu: "0.5"
+      memory: 256Mi
+    min:
+      cpu: "0.1"
+      memory: 128Mi
+    max:
+      cpu: "2"
+      memory: 1Gi

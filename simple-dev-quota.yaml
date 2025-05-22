@@ -1,0 +1,15 @@
+#1). Max 10 Pods in the dev-team namespace.
+#2). Total requested CPU ≤ 4 cores.
+#3). Total memory limits ≤ 16Gi.
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-quota
+  namespace: dev-team
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi
