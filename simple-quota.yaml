@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: limit-compute
+  namespace: my-namespace
+spec:
+  hard:
+    # These look a little odd because they're not nested but they refer to the requests and limit fields in a Pod
+    requests.cpu: "1"
+    requests.memory: 100Gi
+    limits.cpu: "1"
+    limits.memory: 100Gi
