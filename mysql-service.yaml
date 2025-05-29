@@ -1,0 +1,11 @@
+#kubectl port-forward svc/mysql 3306:3306
+#mysql -h 127.0.0.1 -P 3306 -u root -p
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: mysql
