@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mysql-init-seed-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: mysql-client
+        image: mysql:8.0
+        command: ["sh", "-c"]
+        args:
+          - |
+            mysql -h mysql -P 3306 -u root -prootpassword <<EOF
+            CREATE DATABASE IF NOT EXISTS my_database;
+            USE my_database;
+            CREATE TABLE IF NOT EXISTS users (
+              id INT AUTO_INCREMENT PRIMARY KEY,
+              name VARCHAR(100),
+              email VARCHAR(100)
+            );
+            INSERT INTO users (name, email) VALUES ('Admin', 'admin@example.com'), ('Tona', 'tona@example.com');
+            EOF
+      restartPolicy: OnFailure

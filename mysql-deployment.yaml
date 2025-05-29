@@ -1,3 +1,5 @@
+#kubectl create secret generic mysql-secret --from-literal=password=rootpassword
+#kubectl create secret generic mysql-secret  --from-literal=username=root --from-literal=password=rootpassword --from-literal=database=my_database
 #mysql -h 127.0.0.1 -P 3306 -u root -p
 apiVersion: apps/v1
 kind: Deployment
@@ -19,7 +21,11 @@ spec:
           name: mysql
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: root
+              #value: root
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
           ports:
             - containerPort: 3306
               name: mysql
