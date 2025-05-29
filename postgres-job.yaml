@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-init-db
+spec:
+  template:
+    spec:
+      containers:
+      - name: init-db
+        image: postgres:15
+        env:
+        - name: PGPASSWORD
+          value: password   # password for PostgreSQL user
+        command: ["sh", "-c"]
+        args:
+          - |
+            psql -h postgres -U myuser <<EOF
+            CREATE DATABASE mydb;
+            \c mydb
+            CREATE TABLE users (
+              id SERIAL PRIMARY KEY,
+              name VARCHAR(50),
+              email VARCHAR(50)
+            );
+            INSERT INTO users (name, email) VALUES
+              ('Admin', 'admin@example.com'),
+              ('Tona', 'tona@example.com');
+            EOF
+      restartPolicy: OnFailure
