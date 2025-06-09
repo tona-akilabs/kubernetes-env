@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-content
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html><body><h1>Hello from NGINX!</h1></body></html>
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: startup-nginx
+spec:
+  containers:
+  - name: startup
+    image: nginx:1.25.2
+    volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: webservercontent
+    startupProbe:
+      httpGet:
+        path: /
+        port: 80
+      failureThreshold: 30
+      periodSeconds: 10
+  volumes:
+      - name: webservercontent
+        configMap:
+          name: nginx-content
